@@ -2,7 +2,6 @@
 
 #include "BatlleTank.h"
 #include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 #include "TankBarrel.h"
 #include "Tank.h"
 #include "Projectile.h"
@@ -14,10 +13,6 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
-	//// No need to protect points as added at construction
-	//TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-	
 	
 }
 
@@ -26,20 +21,27 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();	
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 
 void ATank::AimAt(FVector HitLocation)
 {
+	if (!ensure(TankAimingComponent)) return;
+	
 	TankAimingComponent->AimAt(HitLocation, this->LauchSpeed);
+	//UE_LOG(LogTemp, Warning, TEXT("I'm here"));
 }
 
 void ATank::Fire()
 {
+	if (!ensure(Barrel)) return;
+
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;	
 	
 
-	if (Barrel && isReloaded)
+	if (isReloaded)
 	{
 
 		auto Time = GetWorld()->GetTimeSeconds();
