@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BatlleTank.h"
-#include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "Tank.h"
 #include "Projectile.h"
@@ -21,18 +20,16 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();	
-
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!ensure(TankAimingComponent)) return;
-	
-	TankAimingComponent->AimAt(HitLocation, this->LauchSpeed);
-	//UE_LOG(LogTemp, Warning, TEXT("I'm here"));
-}
+//
+//void ATank::AimAt(FVector HitLocation)
+//{
+//	if (!ensure(TankAimingComponent)) return;
+//	
+//	TankAimingComponent->AimAt(HitLocation, this->LauchSpeed);
+//	//UE_LOG(LogTemp, Warning, TEXT("I'm here"));
+//}
 
 void ATank::Fire()
 {
@@ -54,10 +51,9 @@ void ATank::Fire()
 			Barrel->GetSocketRotation(FName("Projectile"))
 		);
 
-		Projectile->LaunchProjectile(LauchSpeed);
+		//Projectile->LaunchProjectile(LauchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 	}
-
 
 }
 

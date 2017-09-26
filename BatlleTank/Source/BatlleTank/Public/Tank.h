@@ -8,8 +8,6 @@
 
 // Forward Declarations
 class UTankBarrel; 
-class UTankTurret;
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
@@ -19,14 +17,8 @@ class BATLLETANK_API ATank : public APawn
 		
 public:
 
-	void AimAt(FVector HitLocation);
-
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
-
-//protected:
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
 	// Sets default values for this pawn's properties
@@ -36,12 +28,7 @@ private:
 	virtual void BeginPlay() override;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AProjectile> ProjectileBlueprint;
-
-
-	// TODO remove once firing is moved to aiming comp
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LauchSpeed = 4000; // Sensible starting value of 1000 m/s 
+	TSubclassOf<AProjectile> ProjectileBlueprint;	
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;	
